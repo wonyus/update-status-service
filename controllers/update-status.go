@@ -12,10 +12,10 @@ type UpdateStatusRequest struct {
 	MoistureValue int    `json:"moistureValue"`
 	Mode          string `json:"mode"`
 	Moistures     []struct {
-		MoistureValue int    `json:"vl"`
-		SensorPin     int    `json:"seP"`
-		LEDpin        int    `json:"leP"`
-		SensorName    string `json:"seN"`
+		MoistureValue float64 `json:"vl"`
+		SensorPin     int     `json:"seP"`
+		LEDpin        int     `json:"leP"`
+		SensorName    string  `json:"seN"`
 	} `json:"moistures"`
 	Switchs []struct {
 		Value bool   `json:"vl"`
@@ -24,10 +24,10 @@ type UpdateStatusRequest struct {
 		Name  string `json:"swN"`
 	} `json:"switchs"`
 	Humiditys []struct {
-		HumidityValue int    `json:"hVl"`
-		Temperature   int    `json:"tVl"`
-		SensorPin     int    `json:"seP"`
-		SensorName    string `json:"seN"`
+		HumidityValue float64 `json:"hVl"`
+		Temperature   float64 `json:"tVl"`
+		SensorPin     int     `json:"seP"`
+		SensorName    string  `json:"seN"`
 	} `json:"humiditys"`
 }
 
