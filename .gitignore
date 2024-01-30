@@ -19,3 +19,11 @@
 
 # Go workspace file
 go.work
+
+/node_modules
+/bin
+.env
+package-lock.json
+/temp
+.serverless
+```

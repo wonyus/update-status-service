@@ -1,0 +1,10 @@
+# $Env:GOOS = 'linux';
+# $Env:GOARCH = 'amd64';
+# $Env:CGO_ENABLED = '0';
+# $Env:GO111MODULE = 'on';
+
+set GOOS = linux
+
+deploy:
+	go build -o bin/main main.go && \
+	serverless deploy
