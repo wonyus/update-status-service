@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"github.com/wonyus/update-status-service/utils"
 )
 
 var MessagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
@@ -18,7 +19,7 @@ var MessagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Me
 }
 
 func DefaultSubscribeHandler(client mqtt.Client) {
-	topic := os.Getenv("MQTT_TOPIC")
+	topic := utils.Strip(os.Getenv("MQTT_TOPIC"))
 	token := client.Subscribe(topic, 1, nil)
 	token.Wait()
 	log.Printf("Subscribed to topic %s", topic)

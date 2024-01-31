@@ -8,6 +8,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/wonyus/update-status-service/controllers"
 	"github.com/wonyus/update-status-service/initials"
+	"github.com/wonyus/update-status-service/utils"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -29,28 +30,19 @@ func init() {
 	r.Post("/update-status", controllers.UpdateStatus)
 
 	// Check the MODE environment variable to decide whether to use local server or AWS Lambda
-	if os.Getenv("MODE") != "dev" {
+	if utils.Strip(os.Getenv("MODE")) != "dev" {
 		ginLambda = chiadapter.New(r)
 	}
 }
 
 func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	// If no name is provided in the HTTP request body, throw an error
-	if ginLambda != nil {
-		return ginLambda.ProxyWithContext(ctx, req)
-	}
-
-	// If running in local mode, you can handle the request locally
-	// For example, you can return a response directly
-	return events.APIGatewayProxyResponse{
-		Body:       "Local Development Mode",
-		StatusCode: 200,
-	}, nil
+	return ginLambda.ProxyWithContext(ctx, req)
 }
 
 func main() {
 	// If running in local mode, start the HTTP server
-	if os.Getenv("MODE") == "dev" {
+	if utils.Strip(os.Getenv("MODE")) == "dev" {
 		http.ListenAndServe(":8080", nil)
 	} else {
 		// Otherwise, start the Lambda function
