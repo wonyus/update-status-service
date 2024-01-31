@@ -28,15 +28,15 @@ RUN GOOS=linux go build -o /app.bin
 
 FROM golang:1.21-alpine
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY --from=builder /app.bin /app/app.bin
+COPY --from=builder /app.bin /app.bin
 
 EXPOSE 8080
 
-RUN adduser -D -g '' appuser && chown -R appuser:appuser /app
+# RUN adduser -D -g '' appuser && chown -R appuser:appuser /app
 
-USER appuser
+# USER appuser
 
 # Run
 CMD ["/app.bin"]
