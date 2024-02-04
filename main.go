@@ -22,6 +22,11 @@ func init() {
 	client := initials.InitialMqttClient(controllers.MessagePubHandler)
 	controllers.DefaultSubscribeHandler(client)
 
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("healty")
+		w.Write([]byte("healty"))
+	})
+
 	r.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
 		log.Println("ping")
 		w.Write([]byte("pong"))
