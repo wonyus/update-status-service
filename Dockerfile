@@ -32,7 +32,7 @@ FROM golang:1.21-alpine
 
 COPY --from=builder /app.bin /app.bin
 
-EXPOSE 8080
+EXPOSE 80
 
 # RUN adduser -D -g '' appuser && chown -R appuser:appuser /app
 
