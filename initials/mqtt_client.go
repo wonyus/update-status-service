@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/wonyus/update-status-service/utils"
@@ -34,6 +35,9 @@ func InitialMqttClient(rev mqtt.MessageHandler) mqtt.Client {
 	opts.SetDefaultPublishHandler(rev)
 	opts.OnConnect = connectHandler
 	opts.OnConnectionLost = connectLostHandler
+	opts.SetAutoReconnect(true)
+	opts.SetCleanSession(true)
+	opts.SetKeepAlive(time.Second * 60)
 	client := mqtt.NewClient(opts)
 	if token := client.Connect(); token.Wait() && token.Error() != nil {
 		log.Println(token.Error())
