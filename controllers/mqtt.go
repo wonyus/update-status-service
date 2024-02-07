@@ -33,5 +33,9 @@ func Subscribe(client mqtt.Client) {
 }
 
 func Publish(client mqtt.Client) {
-
+	topic := "topic/test"
+	log.Printf("Before Publish to topic %s", topic)
+	token := client.Publish(topic, 0, false, "Hello, world!")
+	token.Wait()
+	log.Printf("Publish to topic %s", topic)
 }
