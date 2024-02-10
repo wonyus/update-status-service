@@ -16,7 +16,11 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Set Tage
-        run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
+        run: |
+          echo "$(git describe --tags --abbrev=0)` : $GIT_TAG"
+        env:
+          GIT_TAG: ${{ steps.commit.outputs.commit_hash }}
+
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
