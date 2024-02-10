@@ -17,8 +17,9 @@ jobs:
       
       - name: Set Tage
         run: |
-          echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
-        env:
+          echo "GIT_TAG=`echo $(git tag )`" >> $GITHUB_ENV
+          echo ${{ vars.GIT_TAG  }}
+          env:
           GIT_TAG: ${{ vars.GIT_TAG  }}
 
       - name: Set up QEMU ${{ vars.GIT_TAG  }}
