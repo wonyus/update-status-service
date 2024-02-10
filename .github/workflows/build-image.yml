@@ -15,14 +15,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Set Tage
-        run: |
-          echo "GIT_TAG=`echo $(git tag )`" >> $GITHUB_ENV
-          echo ${{ vars.GIT_TAG  }}
-          env:
-          GIT_TAG: ${{ vars.GIT_TAG  }}
+      - name: Get last tag
+        run: echo "Last tag is $(git describe --tags --abbrev=0)"
+        id: get_last_tag
+        env:
+          LAST_TAG: ${{ steps.get_last_tag.outputs.stdout }}
 
-      - name: Set up QEMU ${{ vars.GIT_TAG  }}
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
@@ -40,4 +39,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: wonyus/update-status:latest, wonyus/update-status:${{  env.GIT_TAG }}
+          tags: wonyus/update-status:latest, wonyus/update-status:${{  env.LAST_TAG }}
