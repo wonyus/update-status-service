@@ -7,7 +7,7 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
- 
+
     steps:
       - id: commit
         uses: pr-mpt/actions-commit-hash@v2
@@ -20,7 +20,7 @@ jobs:
       - name: Get last tag
         id: get_last_tag
         run: echo "GIT_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
-      
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -39,4 +39,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: wonyus/update-status:latest, wonyus/update-status:${{ steps.get_last_tag.outputs.stdout }}
+          tags: wonyus/update-status:latest, wonyus/update-status:${{ env.GIT_TAG }}
