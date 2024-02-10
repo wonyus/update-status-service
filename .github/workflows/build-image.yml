@@ -17,18 +17,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fetch tags
-        run: git fetch --depth=1 --tags
-      
       - name: Get last tag
         run: echo "Last tag is $(git describe --tags --abbrev=0)"
         id: get_last_tag
         env:
           LAST_TAG: ${{ steps.get_last_tag.outputs.stdout }}
 
-      - name: Use last tag in subsequent steps
-        run: echo "Last tag is $LAST_TAG"
-        
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
