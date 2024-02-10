@@ -21,7 +21,7 @@ jobs:
         env:
           GIT_TAG: ${{ vars.GIT_TAG  }}
 
-      - name: Set up QEMU
+      - name: Set up QEMU ${{ vars.GIT_TAG  }}
         uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
