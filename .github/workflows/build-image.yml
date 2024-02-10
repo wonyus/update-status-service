@@ -41,4 +41,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: wonyus/update-status:latest, wonyus/update-status:${{  env.LAST_TAG }}
+          tags: wonyus/update-status:latest, wonyus/update-status:${{ steps.get_last_tag.outputs.stdout }}
