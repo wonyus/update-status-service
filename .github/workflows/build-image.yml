@@ -33,4 +33,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: wonyus/update-status:latest, wonyus/update-status:${{ steps.commit.outputs.short }}
+          tags: wonyus/update-status:latest, wonyus/update-status:${{  github.ref_name }}
