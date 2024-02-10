@@ -17,10 +17,9 @@ jobs:
       
       - name: Set Tage
         run: |
-          echo "`$(git describe --tags --abbrev=0)` : $GIT_TAG"
+          echo "$(git describe --tags --abbrev=0) : $GIT_TAG"
         env:
           GIT_TAG: ${{ vars.GIT_TAG  }}
-
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
