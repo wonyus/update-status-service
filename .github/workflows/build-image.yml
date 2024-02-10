@@ -14,6 +14,9 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
+      
+      - name: Set Tage
+        run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -33,4 +36,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: wonyus/update-status:latest, wonyus/update-status:${{  github.ref_name }}
+          tags: wonyus/update-status:latest, wonyus/update-status:${{  env.GIT_TAG }}
