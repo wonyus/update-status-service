@@ -20,6 +20,7 @@ type UpdateStatusRequest struct {
 	Switchs []struct {
 		Value bool   `json:"vl"`
 		ID    int    `json:"id"`
+		Uuid  string `json:"uuid"`
 		Pin   int    `json:"swP"`
 		Name  string `json:"swN"`
 	} `json:"switchs"`
@@ -46,7 +47,7 @@ func UpdateStatus(w http.ResponseWriter, r *http.Request) {
 	// 	initials.DB.Exec("UPDATE humidity SET humidity_value = $1, temperature = $2 WHERE id = $3", humidity.HumidityValue, humidity.Temperature, humidity.SensorPin)
 	// }
 	for _, switchs := range body.Switchs {
-		initials.DB.Exec("UPDATE switch SET status = $1 WHERE id = $2", switchs.Value, switchs.ID)
+		initials.DB.Exec("UPDATE switch SET status = $1 WHERE id = $2", switchs.Value, switchs.Uuid)
 	}
 
 	resMessage := struct {
