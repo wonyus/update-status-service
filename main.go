@@ -30,32 +30,4 @@ func main() {
 		c.JSON(200, gin.H{"status": 200, "message": "pong"})
 	})
 	route.Run(":80")
-
-	// type Person struct {
-	// 	Header string `pos:"1"`
-	// 	Name   string `pos:"2"`
-	// 	Tel    string `pos:"3"`
-	// }
-
-	// // Example input data
-	// data := "header||123456789"
-
-	// // Unmarshal the string back into a person struct
-	// var person Person
-	// err := utils.Unmarshal(data, &person)
-	// if err != nil {
-	// 	fmt.Println("Error unmarshaling string:", err)
-	// 	return
-	// }
-
-	// fmt.Printf("Unmarshaled Person: %+v\n", person)
-
-	// // Marshal the struct into a string
-	// marshaledString, err := utils.Marshal(person)
-	// if err != nil {
-	// 	fmt.Println("Error marshaling person:", err)
-	// 	return
-	// }
-
-	// fmt.Println("Marshalled string:", marshaledString)
 }

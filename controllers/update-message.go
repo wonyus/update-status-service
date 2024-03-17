@@ -24,7 +24,9 @@ func MessageUpdateStatus(message []byte) error {
 	// 	initials.DB.Exec("UPDATE humidity SET humidity_value = $1, temperature = $2 WHERE id = $3", humidity.HumidityValue, humidity.Temperature, humidity.SensorPin)
 	// }
 	for _, switchs := range body.Switchs {
-		initials.DB.Exec("UPDATE switch SET status = $1 WHERE id = $2", switchs.Value, switchs.ID)
+		log.Println(switchs.ID)
+
+		initials.DB.Exec("UPDATE switchs SET status = $1 WHERE id = $2", switchs.Value, switchs.ID)
 	}
 
 	return nil
