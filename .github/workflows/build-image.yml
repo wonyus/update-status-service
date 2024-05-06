@@ -2,7 +2,7 @@ name: build backend
 
 on:
   push:
-    branches: ["main"]
+    branches: ["mainn"]
 
 jobs:
   docker:
