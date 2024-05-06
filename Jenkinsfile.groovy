@@ -35,7 +35,6 @@ pipeline {
         }
 
         stage('Deploy') {
-            agent { label 'kube-node' }
             steps {
                 sh 'kubectl delete deployment update-status -n 	microservice'
                 sh "kubectl apply -f ${DEPLOYMENT_FILE}"
