@@ -9,7 +9,6 @@ import (
 
 type Resource struct {
 	DB_PG_URL        string
-	PgConnStr        string
 	InfluxUrl        string
 	InfluxToken      string
 	MQTT_BROKER_URL  string

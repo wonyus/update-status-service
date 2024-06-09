@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.21-alpine as builder
+FROM golang:1.22-alpine as builder
 
 # Set destination for COPY
 WORKDIR /app
@@ -12,8 +12,9 @@ RUN go mod download
 # Copy the source code. Note the slash at the end, as explained in
 # https://docs.docker.com/engine/reference/builder/#copy
 COPY *.go ./
+COPY contexts/* ./contexts/
 COPY controllers/* ./controllers/
-COPY initials/* ./initials/
+COPY pkg/* ./pkg/
 COPY utils/* ./utils/
 
 
@@ -26,13 +27,11 @@ RUN GOOS=linux go build -o /app.bin
 # the application is going to listen on by default.
 # https://docs.docker.com/engine/reference/builder/#expose
 
-FROM golang:1.21-alpine
+FROM golang:1.22-alpine
 
 # WORKDIR /app
 
 COPY --from=builder /app.bin /app.bin
-
-EXPOSE 80
 
 # RUN adduser -D -g '' appuser && chown -R appuser:appuser /app
 
