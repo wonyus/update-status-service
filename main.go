@@ -1,33 +1,53 @@
 package main
 
 import (
-	mqtt "github.com/eclipse/paho.mqtt.golang"
-	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
+	"github.com/wonyus/update-status-service/contexts"
 	"github.com/wonyus/update-status-service/controllers"
-	"github.com/wonyus/update-status-service/initials"
+	"github.com/wonyus/update-status-service/pkg/client"
+	"github.com/wonyus/update-status-service/pkg/db"
 )
 
-var client mqtt.Client
-
 func main() {
-	initials.InitDB()
-	client := initials.InitialMqttClient(controllers.MessagePubHandler)
-	controllers.DefaultSubscribeHandler(client)
+	var messageReceived = make(chan struct{})
 
-	route := gin.Default()
-	route.Use(gin.Logger())
-	route.Use(gin.Recovery())
+	ctx := contexts.NewResource()
+	db := db.NewPGDB(ctx)
+	repo := controllers.NewRepository(ctx, db)
+	mqttHandler := client.NewMqttHandler(ctx, repo, messageReceived)
 
-	route.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{"status": "online", "message": "Hello, world!"})
-	})
-	route.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{"status": 200, "message": "pong"})
-	})
-	route.GET("/test/publish", func(c *gin.Context) {
-		controllers.Publish(client)
-		c.JSON(200, gin.H{"status": 200, "message": "pong"})
-	})
-	route.Run(":80")
+	mqttHandler.InitialMqttClient(mqttHandler.MessageSubHandler)
+
+	for {
+		<-messageReceived
+	}
 }
+
+// queryAPI := client.QueryAPI(org)
+// query := `from(bucket: "Switch")
+//             |> range(start: -10m)
+//             |> filter(fn: (r) => r._measurement == "measurement1")`
+// results, err := queryAPI.Query(context.Background(), query)
+// if err != nil {
+//     log.Fatal(err)
+// }
+// for results.Next() {
+//     fmt.Println(results.Record())
+// }
+// if err := results.Err(); err != nil {
+//     log.Fatal(err)
+// }
+// query = `from(bucket: "Switch")
+//               |> range(start: -10m)
+//               |> filter(fn: (r) => r._measurement == "measurement1")
+//               |> mean()`
+// results, err = queryAPI.Query(context.Background(), query)
+// if err != nil {
+//     log.Fatal(err)
+// }
+// for results.Next() {
+//     fmt.Println(results.Record())
+// }
+// if err := results.Err(); err != nil {
+//     log.Fatal(err)
+// }

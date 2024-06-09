@@ -9,13 +9,3 @@ deploy:
 	go build -o bin/main main.go && \
 	serverless deploy
 
-local:
-	export DB_URL=postgres://middleware:010203won@POSTGRES@database.wonyus.tech:9032/iot && \
-	export MQTT_BROKER_URL=emqx.wonyus.tech && \
-	export MQTT_BROKER_PORT=9081 && \
-	export MQTT_CLIENT_ID=update-status-service && \
-	export MQTT_USERNAME=microupdatestatus && \
-	export MQTT_PASSWORD=microupdatestatus && \
-	export MQTT_TOPIC=/switch/basic/test && \
-	export MODE=dev && \
-	go run main.go
