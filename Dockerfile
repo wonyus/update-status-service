@@ -14,7 +14,8 @@ RUN go mod download
 COPY *.go ./
 COPY contexts/* ./contexts/
 COPY controllers/* ./controllers/
-COPY pkg/* ./pkg/
+COPY pkg/client/* ./pkg/client/
+COPY pkg/db/* ./pkg/db/
 COPY utils/* ./utils/
 
 
