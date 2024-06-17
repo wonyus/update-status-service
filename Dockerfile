@@ -20,7 +20,7 @@ COPY utils/* ./utils/
 
 
 # Build
-RUN GOOS=linux go build -o /app.bin
+RUN GOOS=linux go build -o /update-status
 
 # Optional:
 # To bind to a TCP port, runtime parameters must be supplied to the docker command.
@@ -32,11 +32,11 @@ FROM golang:1.22-alpine
 
 # WORKDIR /app
 
-COPY --from=builder /app.bin /app.bin
+COPY --from=builder /update-status /update-status
 
 # RUN adduser -D -g '' appuser && chown -R appuser:appuser /app
 
 # USER appuser
 
 # Run
-CMD ["/app.bin"]
+CMD ["/update-status"]
